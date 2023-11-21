@@ -5,8 +5,10 @@ import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import { NextResponse } from "next/server";
+
 import { NextAuthOptions } from 'next-auth';
+
+
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(Prisma),
@@ -14,10 +16,20 @@ export const authOptions: NextAuthOptions = {
     GitHubProvider({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
+      profile(profile) {
+        return { id: profile.sub, name: profile.name, email: profile.email, image: profile.profile,
+          role: profile.role ?? "user" 
+        }
+      },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID as string,
       clientSecret: process.env.GOOGLE_SECRET as string,
+      profile(profile) {
+        return { id: profile.sub, name: profile.name, email: profile.email, image: profile.profile,
+          role: profile.role ?? "user" 
+        }
+      },
     }),
     CredentialsProvider({
       name: "credentials",
@@ -30,15 +42,15 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         try {
           // Check if email and password are provided
-                if (!credentials?.email || !credentials?.password) {
-                    throw new Error("Invalid credentials");
-                }
+              if (!credentials?.email || !credentials?.password) {
+                  throw new Error("Invalid credentials");
+              }
 
             // Find the user by email
                 const user = await Prisma.user.findUnique({
-                    where: {
-                        email: credentials?.email,
-                    },
+                  where: {
+                    email: credentials?.email,
+                  },
                 });
 
             // Check if the user exists
@@ -58,18 +70,19 @@ export const authOptions: NextAuthOptions = {
             return user; // Replace with the actual user
                 
         } catch (error) {
-            console.error("Error authenticating user", error);          throw new Error("Authentication failed");
+          console.error("Error authenticating user", error);          
+          throw new Error("Authentication failed");
         }
       },
     }),
     // Add other authentication providers as needed
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, }) {
       // Store user information in the token (if needed)
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
+        token.id = user.id,
+        token.email = user.email
         // Add other user properties as needed
       }
       return token;
@@ -80,6 +93,7 @@ export const authOptions: NextAuthOptions = {
       if (token && user) {
         session.user = {
           email: token.email,
+
           // Add other user properties as needed
         };
       }

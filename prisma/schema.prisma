@@ -16,6 +16,7 @@ model User {
   email      String?   @unique
   emailVerified DateTime?
   image String?
+  role String
   hashedPassword String?
   access_token String?
   token_type String?
@@ -43,10 +44,20 @@ model Account{
 
 model Teacher{
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  FirstName   String
-  LastName   String
-  MiddleName  String
+  first_name   String
+  last_name   String
+  middle_name  String
   email      String?   @unique
-
+  phone String?
   image String?
+  age Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Role{
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  type String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
