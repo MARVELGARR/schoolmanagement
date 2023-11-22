@@ -47,17 +47,75 @@ model Teacher{
   first_name   String
   last_name   String
   middle_name  String
+  gender String
   email      String?   @unique
   phone String?
   image String?
+  marital_status Maritalstatus
   age Int
+  subjects    String[]   // Array of subjects the teacher teaches
+  address     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+model Student{
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  first_name   String
+  last_name   String
+  gender String
+  middle_name  String
+  email      String?   @unique
+  phone String?
+  image String?
+  class String?
+  level String?
+  age         Int
+  subjects    String[]   // Array of subjects the teacher teaches
+  address     String?
+  religion  Religion
+  grade       Int        // Grade/Class of the student    // Address of the teacher
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+model Parents{
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  first_name   String
+  last_name   String
+  middle_name  String
+  gender String
+  email      String?   @unique
+  phone String?
+  image String?
+  age         Int  // Array of subjects the teacher teaches
+  address     String?
+  religion  Religion     // Grade/Class of the student    // Address of the teacher
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
 model Role{
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  type String
+  type   RoleType  
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+}
+
+enum Maritalstatus {
+  single
+  married
+  complicated
+}
+
+enum RoleType {
+  ADMIN
+  USER
+  TEACHER
+  STUDENT
+  // Add other roles as needed
+}
+enum Religion {
+  christain
+  muslim  
+  judiasm
+  // Add other roles as needed
 }

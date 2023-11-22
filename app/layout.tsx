@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Providers from './redux/redux-provider/redux-provider'
 import SessionProviders from '../lib/auth/session/session';
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes';
 
 
 
@@ -22,10 +24,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <SessionProviders>
-
-          <Providers>
-            {children}
-          </Providers>
+          <Theme>
+            <Providers>
+              {children}
+            </Providers>
+          </Theme>
         </SessionProviders>
 
         </body>

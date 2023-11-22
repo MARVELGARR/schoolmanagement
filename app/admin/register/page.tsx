@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { toast } from "react-hot-toast"
-import { Metadata } from "next"
+
 
 
 export default function Register() {
@@ -26,7 +26,7 @@ export default function Register() {
             })
             if(newUser.ok){
                 const res = await newUser.json()
-                toast.success("user registered successfully")
+                toast.success("user registered successfully", )
             }
             else{
                 toast.error("user registration failed")

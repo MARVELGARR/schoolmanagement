@@ -19,21 +19,12 @@ function Login() {
 
     const router = useRouter()
     const {data: session, status} = useSession({
-        required:true,
-        onUnauthenticated(){
-            router.push("/login")
-        }
+        required: true,// The user is not authenticated, handle it here.
+        onUnauthenticated() {
+            console.log('login')
+        },
     })
 
-    useEffect(()=>{
-        if(status ==="loading"){
-            return
-        }
-        if(status === "authenticated"){
-            router.push("/")
-        }
-        
-    },[status])
     
 
     const login = async (e: { preventDefault: () => void }) =>{

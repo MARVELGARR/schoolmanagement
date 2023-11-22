@@ -12,6 +12,11 @@ import { NextAuthOptions } from 'next-auth';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(Prisma),
+  pages: {
+    signIn: '/login',
+    signOut: '/login',
+    
+  },
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID as string,
