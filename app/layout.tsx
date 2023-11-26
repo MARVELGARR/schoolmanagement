@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Providers from './redux/redux-provider/redux-provider'
+import Providers from '../redux/redux-provider/redux-provider'
 import SessionProviders from '../lib/auth/session/session';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
-
-
+import ToasterContex from '../contexts/toastProvider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,6 +25,7 @@ export default function RootLayout({
         <SessionProviders>
           <Theme>
             <Providers>
+              <ToasterContex/>
               {children}
             </Providers>
           </Theme>

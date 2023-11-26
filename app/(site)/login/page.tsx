@@ -79,7 +79,7 @@ function Login() {
                 </div>
             </form>
             <div className='flex w-full gap-2 mt-3 items-center justify-center'>
-                <button onClick={()=>signIn("github")} className="w-full flex bg-white border-black border-4 rounded-xl items-center justify-center">
+                <button type='button' onClick={()=>signIn("github")} className="w-full flex bg-white border-black border-4 rounded-xl items-center justify-center">
                     <img 
                         src="/svg/github.svg"
                         alt="github"
@@ -87,7 +87,7 @@ function Login() {
                     />
                     <p className="">github</p>
                 </button>
-                <button onClick={()=>signIn("google")} className="w-full flex rounded-xl border-black border-4 justify-center items-center">
+                <button type='button' onClick={()=>signIn("google")} className="w-full flex rounded-xl border-black border-4 justify-center items-center">
                     <img 
                         src="/svg/google.svg"
                         alt="goggle"
