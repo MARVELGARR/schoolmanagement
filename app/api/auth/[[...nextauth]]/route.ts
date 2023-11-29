@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET as string,
       profile(profile) {
         return { id: profile.sub, name: profile.name, email: profile.email, image: profile.profile,
-          role: profile.role ?? "user" 
+          role: profile.role = "STUDENT" 
         }
       },
     }),
@@ -31,7 +31,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET as string,
       profile(profile) {
         return { id: profile.sub, name: profile.name, email: profile.email, image: profile.profile,
-          role: profile.role ?? "user" 
+          role: profile.role = 'STUDENT' 
         }
       },
     }),

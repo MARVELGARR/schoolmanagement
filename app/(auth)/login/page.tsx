@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
+import { ca } from 'date-fns/locale'
 
 
 
@@ -17,15 +18,7 @@ function Login() {
         password:"",
     })
 
-    const router = useRouter()
-    const {data: session, status} = useSession({
-        required: true,// The user is not authenticated, handle it here.
-        onUnauthenticated() {
-            console.log('login')
-        },
-    })
 
-    
 
     const login = async (e: { preventDefault: () => void }) =>{
         e.preventDefault();
@@ -37,8 +30,8 @@ function Login() {
                     toast.error(callback.error)
                 }
                 if(callback?.ok && !callback?.error){
-
                     toast.success("Logged in")
+                    
                 }
             })
                        
@@ -51,6 +44,7 @@ function Login() {
   return (
 
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <title>Log In</title>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
         </div>
@@ -79,7 +73,7 @@ function Login() {
                 </div>
             </form>
             <div className='flex w-full gap-2 mt-3 items-center justify-center'>
-                <button type='button' onClick={()=>signIn("github")} className="w-full flex bg-white border-black border-4 rounded-xl items-center justify-center">
+                <button type='button' onClick={()=>signIn("github", {callbackUrl: '/'})} className="w-full flex bg-white border-black border-4 rounded-xl items-center justify-center">
                     <img 
                         src="/svg/github.svg"
                         alt="github"
@@ -87,7 +81,7 @@ function Login() {
                     />
                     <p className="">github</p>
                 </button>
-                <button type='button' onClick={()=>signIn("google")} className="w-full flex rounded-xl border-black border-4 justify-center items-center">
+                <button type='button' onClick={()=>signIn("google", {callbackUrl: '/'})} className="w-full flex rounded-xl border-black border-4 justify-center items-center">
                     <img 
                         src="/svg/google.svg"
                         alt="goggle"

@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt"
 import { Prisma } from "@/db/prisma-setting/prisma-client";
 import { NextResponse } from "next/server"
+import { UserRole } from "@prisma/client";
+
 
 export async function POST(req: Request){
     const body = await req.json();
@@ -26,7 +28,7 @@ export async function POST(req: Request){
                 name,
                 email,
                 hashedPassword,
-                role: 'STUDENT'
+                role: UserRole.STUDENT
             }
         })
         return NextResponse.json(user);
