@@ -9,7 +9,7 @@ interface LogoProps{
 const Logo: React.FC<LogoProps> = ({ className }) => {
     return (
         <Image
-            src=''
+            src='/images/taught.png'
             alt='logo'
             width='50'
             height='50'

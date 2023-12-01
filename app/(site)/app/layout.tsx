@@ -1,15 +1,19 @@
-import { authOptions } from "@/app/api/auth/[[...nextauth]]/route";
+
 import SidebarLayout from "@/components/MarvelComponents/sidebarComponents/sideBar";
-import { getServerSession } from "next-auth";
+import SessionProviders from "@/lib/auth/session/session";
+
 
 const AppLayout = ({children}: {children: React.ReactNode}) => {
 
-    const session = getServerSession(authOptions)
+
 
     return (
         <div className="">
-            <SidebarLayout/>
-            {children}
+            <SessionProviders >
+                
+                <SidebarLayout/>
+                {children}
+            </SessionProviders>
         </div>
     );
 }

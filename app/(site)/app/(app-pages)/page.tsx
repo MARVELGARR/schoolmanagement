@@ -1,8 +1,6 @@
 
 
-
-
-const DashBoard = () => {
+const DashBoard = (props) => {
     return (
         <div className="">
             <header>

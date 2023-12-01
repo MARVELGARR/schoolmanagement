@@ -44,3 +44,20 @@ export const CreateStudent = async ({ studentData }: { studentData: studentDataP
     throw error;
   }
 };
+
+export const GetAdmin = async () =>{
+  try{
+    const getAdmin = await Prisma.user.findFirst({
+      where: {
+        role: 'ADMIN'
+      }
+    })
+    if(!getAdmin){
+      throw new Error('Could not find admin')
+    }
+    return getAdmin
+  }
+  catch(error){
+    throw new Error('Could not find admin')
+  }
+}

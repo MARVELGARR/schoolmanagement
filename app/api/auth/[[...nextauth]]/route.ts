@@ -13,8 +13,10 @@ import { NextAuthOptions } from 'next-auth';
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(Prisma),
   pages: {
-    signIn: '/login',
-    
+    signIn: '/login', // Customize the sign-in page redirect
+    signOut: '/', // Customize the sign-out page redirect
+     // Customize the error page redirect
+    verifyRequest: '/auth/verify-request', // Customize the verify request page redirect
   },
   providers: [
     GitHubProvider({
@@ -81,25 +83,32 @@ export const authOptions: NextAuthOptions = {
     }),
     // Add other authentication providers as needed
   ],
+
+  
   callbacks: {
-    async jwt({ token, user, }) {
+    async jwt({ token, user, account }) {
       // Store user information in the token (if needed)
       if (user) {
-        token.id = user.id,
-        token.email = user.email
+        token.id = user?.id,
+        token.email = user?.email
+        token.image = user?.image
         // Add other user properties as needed
+      }
+      if (account) {
+        token.accessToken = account.access_token
       }
       return token;
     },
 
-    async session({ session, token, user }) {
+    async session({ session, token, user,  }) {
       // Add user information to the session (if needed)
       if (token && user) {
         session.user = {
-          email: token.email,
-
+          email: token?.email,
+          image: token?.image as string,
           // Add other user properties as needed
         };
+        
       }
       return session;
     },
@@ -107,6 +116,8 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.SECRET,
   session: {
     strategy: "jwt",
+    maxAge: 24 * 60 * 60, // 24 hours
+    
   },
   debug: process.env.NODE_ENV === "development",
 };
