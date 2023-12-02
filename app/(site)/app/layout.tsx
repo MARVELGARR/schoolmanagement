@@ -15,7 +15,7 @@ const AppLayout = ({children}: {children: React.ReactNode}) => {
     }
 
     return (
-        <div className="">
+        <div className="flex items-center h-screen">
                 
             <SidebarLayout/>
             {children}

@@ -4,8 +4,7 @@ import Logo from "./logo";
 import NavBar from "./navbar";
 import SidebarDivider from "./sidebarDivider";
 import Tools from "./tools";
-import { useEffect, useState } from "react";
-import AdminAvatar from "./adminSidebarComponents/admin-avatar";
+import { useState } from "react";
 import { redirect } from "next/navigation";
 import { userProps } from "@/interface";
 
@@ -22,7 +21,7 @@ const SidebarLayout = () => {
 
     
     return (
-        <aside className=" flex flex-col py-[2rem] items-center justify-between xl:w-64 lg:w-44 md:w-fit bg-slate-100 h-full fixed left-0 inset-y-0">
+        <aside className=" flex flex-col py-[2rem] h-full items-center justify-between xl:w-64 lg:w-44 md:w-fit bg-slate-100  sticky left-0 inset-y-0">
             <SidebarDivider className='flex flex-col w-full items-center gap-[2rem]'>
                 <Logo className=''/>
                 <NavBar className=''/>

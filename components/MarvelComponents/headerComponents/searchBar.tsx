@@ -1,17 +1,11 @@
+import { ImSearch } from "react-icons/im";
 
-import Image from "next/image";
 
 const SearchBar = () => {
     return (
-        <form className='relative w-[60%] h-[2rem]'>
-            <Image
-                src='/svg/search.svg'
-                alt='search icon'
-                width='40'
-                height='40'
-                className=" absolute"
-            />
-            <input className=' absolute inset-0' placeholder="Search for student/teachers/staff" type="text" />
+        <form className='relative w-[40%] h-[2.2rem] border-2 rounded-xl'>
+            <ImSearch className='absolute left-2 top-2  z-30'/>
+            <input className='pl-[2rem] p2-[2px] absolute rounded-xl inset-0' placeholder="Search for student/teachers/staff" type="text" />
         </form>
     );
 }
