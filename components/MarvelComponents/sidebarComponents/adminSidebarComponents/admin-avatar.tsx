@@ -1,12 +1,12 @@
 'use client'
-import { authOptions } from "@/app/api/auth/[[...nextauth]]/route";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils";
-import { getServerSession } from "next-auth";
+
 import { useSession } from "next-auth/react";
 
 
-const AdminAvatar =  ({className, src}: {className?: string, src: string}) => {
+const AdminAvatar =  ({className, src, role}: {className?: string, src: string, role: string}) => {
 
     const {data: session} = useSession()
     return (
@@ -16,8 +16,8 @@ const AdminAvatar =  ({className, src}: {className?: string, src: string}) => {
                 <AvatarFallback className='bg-slate-400'>CN</AvatarFallback>
             </Avatar>
             <div className="flex flex-col items-center">
-                <h1 className="">{session?.user?.name}</h1>
-                <p className="">{`admin`}</p>
+                <h1 className=" font-bold">{session?.user?.name}</h1>
+                <p className="text-left w-full text-sm">{role}</p>
             </div>
         </section>
     );

@@ -16,14 +16,14 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login', // Customize the sign-in page redirect
     signOut: '/', // Customize the sign-out page redirect
      // Customize the error page redirect
-    verifyRequest: '/auth/verify-request', // Customize the verify request page redirect
+     // Customize the verify request page redirect
   },
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
       profile(profile) {
-        return { id: profile.sub, name: profile.name, email: profile.email, image: profile.profile,
+        return { id: profile.id, name: profile.name, email: profile.email, image: profile.avatar_url,
           role: profile.role = "STUDENT" 
         }
       },
@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_ID as string,
       clientSecret: process.env.GOOGLE_SECRET as string,
       profile(profile) {
-        return { id: profile.sub, name: profile.name, email: profile.email, image: profile.profile,
+        return { id: profile.sub, name: profile.name, email: profile.email, image: profile.picture,
           role: profile.role = 'STUDENT' 
         }
       },
@@ -86,21 +86,19 @@ export const authOptions: NextAuthOptions = {
 
   
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       // Store user information in the token (if needed)
       if (user) {
         token.id = user?.id,
         token.email = user?.email
         token.image = user?.image
+        token.picture = user?.image
         // Add other user properties as needed
-      }
-      if (account) {
-        token.accessToken = account.access_token
       }
       return token;
     },
 
-    async session({ session, token, user,  }) {
+    async session({ session, token, user, }) {
       // Add user information to the session (if needed)
       if (token && user) {
         session.user = {
@@ -113,7 +111,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  secret: process.env.SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
     maxAge: 24 * 60 * 60, // 24 hours

@@ -27,3 +27,15 @@ export interface navItemsProps{
     icons: any,
 }
 
+export interface userProps{
+    id: string,
+    name?: string;
+    email?: string;
+    emailVerified?: string;
+    hashedPassword?: string
+    password?: string;
+    image?: string;
+    role: string
+    token_type?: string
+
+}

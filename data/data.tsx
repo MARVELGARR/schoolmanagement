@@ -8,10 +8,10 @@ import { GrBook } from "react-icons/gr";
 import { IoCalendarOutline } from "react-icons/io5";
 
 export const navigations = [
-  { name: 'Dashboard', href: '/dashboard', icon: <MdOutlineDashboard /> },
-  { name: 'Students', href: '/students', icon: <PiStudentBold /> },
-  { name: 'Teachers', href: '/teachers', icon: <PiChalkboardTeacher /> },
-  { name: 'Parents', href: '/parents', icon: <RiGroupLine /> },
-  { name: 'Staffs', href: '/staff', icon: <GrUserWorker /> },
-  { name: 'Account', href: '/account', icon: <MdOutlineManageAccounts/>}
+  { name: 'Dashboard', href: '/app/dashboard', icon: <MdOutlineDashboard /> },
+  { name: 'Students', href: '/app/students', icon: <PiStudentBold /> },
+  { name: 'Teachers', href: '/app/teachers', icon: <PiChalkboardTeacher /> },
+  { name: 'Parents', href: '/app/parents', icon: <RiGroupLine /> },
+  { name: 'Staffs', href: '/app/staffs', icon: <GrUserWorker /> },
+  { name: 'Account', href: '/app/account', icon: <MdOutlineManageAccounts/>}
 ]

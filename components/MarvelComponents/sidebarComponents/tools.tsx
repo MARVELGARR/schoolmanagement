@@ -12,12 +12,12 @@ const Tools = ({className}: {className?:string}) => {
     ]
 
     return (
-        <ul className="flex w-full flex-col items-center gap-[1rem]">
+        <ul className="flex w-full flex-col items-center  gap-[1.5rem]">
             {
                navigations.map((nav, index) => {
                     return(
 
-                    <li onClick={()=> index === 1 && signOut()} key={index} className={cn('', index ==1? 'cursor-pointer':'' , className)}>
+                    <li onClick={()=> index === 1 && signOut()} key={index} className={cn('', index ==1? 'cursor-pointer':'' , 'flex items-center gap-[2rem]')}>
                         {nav.icon}
                         {nav.name}
                     </li>

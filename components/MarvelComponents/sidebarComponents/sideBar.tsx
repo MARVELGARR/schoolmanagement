@@ -7,53 +7,27 @@ import Tools from "./tools";
 import { useEffect, useState } from "react";
 import AdminAvatar from "./adminSidebarComponents/admin-avatar";
 import { redirect } from "next/navigation";
-
-
-
-interface adminProps{
-    getAdmin: {
-        id: string,
-        name?: string;
-        email?: string;
-        emailVerified?: string;
-        hashedPassword?: string
-        password?: string;
-        image?: string;
-        role: string
-        token_type?: string
-
-    }
-}
+import { userProps } from "@/interface";
 
 const SidebarLayout = () => {
-    const [admin, setAdmin] = useState<adminProps>()
+    const [user, setUser] = useState<userProps>()
     const { data: session} = useSession({
         required: true,
         onUnauthenticated() {
-            redirect('/login')
+            redirect('/login?callback=/app')
         },
     })
 
-    useEffect(()=>{
-        const getAdmin = async ()=>{
-            const res = await fetch('/api/getAdmin')
-            const data = await res.json()
-            setAdmin(data)
-            console.log(data)
-        }
-        getAdmin()
-    },[])
 
 
+    
     return (
-        <aside className=" flex flex-col py-[2rem] items-center justify-between xl:w-64 lg:w-44 md:w-fit bg-green-400 h-full fixed left-0 inset-y-0">
-            <SidebarDivider className='flex flex-col items-center gap-[4rem]'>
+        <aside className=" flex flex-col py-[2rem] items-center justify-between xl:w-64 lg:w-44 md:w-fit bg-slate-100 h-full fixed left-0 inset-y-0">
+            <SidebarDivider className='flex flex-col w-full items-center gap-[2rem]'>
                 <Logo className=''/>
-                { session?.user?.email == admin?.getAdmin?.email &&(<AdminAvatar src={session?.user?.image || ""}/>)}
-                {JSON.stringify(admin)}
                 <NavBar className=''/>
             </SidebarDivider>
-            <Tools className='flex items-center gap-[1.5rem]'/>
+            <Tools className=''/>
         </aside>
     );
 }
