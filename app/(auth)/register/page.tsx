@@ -31,7 +31,7 @@ export default function Register() {
                 setName('')
                 SetPassword("")
                 toast.success("user registered successfully", )
-                router.push('/')
+                router.push('/login')
             }
             else{
                 toast.error("user registration failed")

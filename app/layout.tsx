@@ -8,6 +8,7 @@ import { Theme } from '@radix-ui/themes';
 import ToasterContex from '../contexts/toastProvider';
 
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -15,11 +16,13 @@ export const metadata: Metadata = {
   description: 'HomePage',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+
+
   return (
     <html lang="en">
       <body className={inter.className}>

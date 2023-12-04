@@ -12,15 +12,15 @@ export async function GET(): Promise<unknown> {
     } else if (!session?.user?.email) {
       return NextResponse.json({ message: "No user email" });
     } else {
-      const getuser = await Prisma.user.findUnique({
+      const getCurrentUser = await Prisma.user.findUnique({
         where: {
           email: session?.user?.email,
         },
       });
 
-      return NextResponse.json(getuser);
+      return NextResponse.json(getCurrentUser);
     }
   } catch (error) {
-    return NextResponse.json({ error: error });
+    return NextResponse.json({ 'Something went wrong': error });
   }
 }

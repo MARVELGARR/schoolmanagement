@@ -19,16 +19,20 @@ import {
 } from "lucide-react"  
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 
 const HeaderAvatar = ({className}: {className?: string}) => {
+
+    const {data: session, status} = useSession()
+
+
     return (
         <div className={cn(`cursor-pointer`, className)}>
             <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center">
+                <DropdownMenuTrigger className="flex gap-[2rem] items-center">
                     <Avatar>
-                        <AvatarImage src="" />
+                        <AvatarImage src={session?.user?.image as string} />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                     <div className=" cursor-pointer"><IoIosArrowDown/></div>
@@ -39,15 +43,15 @@ const HeaderAvatar = ({className}: {className?: string}) => {
                     <DropdownMenuGroup>
 
                         <DropdownMenuItem>
-                            <Link className='flex items-center' href={"/app/bookmark"}>
-                                <Bookmark className="mr-2 h-4 w-4" />
+                            <Link className='flex items-center' href={"/app/account"}>
+                                <User className="mr-2 h-4 w-4" />
                                 <span>Profile</span>
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                            <Link className='flex items-center' href={"/app/account"}>
-                                <User className="mr-2 h-4 w-4" />
-                                <span>Bookmarks</span>
+                            <Link className='flex items-center' href={"/app/bookmark"}>
+                                <Bookmark className="mr-2 h-4 w-4" />
+                                <span>Bookmark</span>
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
@@ -57,7 +61,7 @@ const HeaderAvatar = ({className}: {className?: string}) => {
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator className='bg-gray-200' />
-                        <DropdownMenuItem onClick={()=>signIn()}>
+                        <DropdownMenuItem className='cursor-pointer' onClick={()=>signIn()}>
                             <LogOut className="mr-2 h-4 w-4" />
                             <span>Log out</span>
                         </DropdownMenuItem>

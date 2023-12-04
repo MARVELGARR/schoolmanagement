@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { signIn } from 'next-auth/react'
 import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 
 function Login() {
@@ -12,12 +13,15 @@ function Login() {
         password:"",
     })
 
+    const router = useRouter()
+
+    const [isLoading, setIsLoading] = useState<boolean>(null)
 
 
     const login = async (e: { preventDefault: () => void }) =>{
         e.preventDefault();
         try{
-
+            setIsLoading(true)
             signIn("credentials", {...data, redirect:false})
             .then((callback)=>{
                 if(callback?.error){
@@ -25,7 +29,8 @@ function Login() {
                 }
                 if(callback?.ok && !callback?.error){
                     toast.success("Logged in")
-                    
+                    router.push("/app")
+                    setIsLoading(false)
                 }
             })
                        
@@ -63,11 +68,11 @@ function Login() {
                 </div>
 
                 <div>
-                    <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                    <button disabled={isLoading} type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
                 </div>
             </form>
             <div className='flex w-full gap-2 mt-3 items-center justify-center'>
-                <button type='button' onClick={()=>signIn("github", {callbackUrl: '/app/dashboard'})} className="w-full flex bg-white border-black border-4 rounded-xl items-center justify-center">
+                <button disabled={isLoading} type='button' onClick={()=>signIn("github", {callbackUrl: '/app'})} className="w-full flex bg-white border-black border-4 rounded-xl items-center justify-center">
                     <img 
                         src="/svg/github.svg"
                         alt="github"
@@ -75,7 +80,7 @@ function Login() {
                     />
                     <p className="">github</p>
                 </button>
-                <button type='button' onClick={()=>signIn("google", {callbackUrl: '/app/dashboard'})} className="w-full flex rounded-xl border-black border-4 justify-center items-center">
+                <button disabled={isLoading} type='button' onClick={()=>signIn("google", {callbackUrl: '/app'})} className="w-full flex rounded-xl border-black border-4 justify-center items-center">
                     <img 
                         src="/svg/google.svg"
                         alt="goggle"

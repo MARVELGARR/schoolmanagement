@@ -1,6 +1,8 @@
+import { UserRole } from '@prisma/client';
 import { Religion } from "@prisma/client"
 import { Prisma } from "../prisma-setting/prisma-client"
 import { studentDataProps } from "@/interface";
+import { redirect } from 'next/navigation';
 
 
 export const CreateStudent = async ({ studentData }: { studentData: studentDataProps }) => {
@@ -61,3 +63,24 @@ export const GetAdmin = async () =>{
     throw new Error('Could not find admin')
   }
 }
+export const GetCurrentUser = async (email : string) =>{
+  try{
+    const currentUser = await Prisma.user.findFirst({
+      where: {
+        email: email
+      }
+    })
+    if(!currentUser){
+      throw new Error('Could not find user')
+    }
+    return currentUser
+  }
+  catch(error){
+    console.error('Error in GetCurrentUser:', error);
+    throw new Error('Something went wrong')
+  }
+}
+
+// utils/auth.ts
+
+
