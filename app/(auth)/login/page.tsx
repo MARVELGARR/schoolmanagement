@@ -15,7 +15,7 @@ function Login() {
 
     const router = useRouter()
 
-    const [isLoading, setIsLoading] = useState<boolean>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
 
     const login = async (e: { preventDefault: () => void }) =>{
@@ -30,13 +30,16 @@ function Login() {
                 if(callback?.ok && !callback?.error){
                     toast.success("Logged in")
                     router.push("/app")
-                    setIsLoading(false)
+                    
                 }
             })
                        
         }
         catch(error){
             toast.error("someting went wrong") 
+        }
+        finally{
+            setIsLoading(false)
         }
     }
 
@@ -72,7 +75,7 @@ function Login() {
                 </div>
             </form>
             <div className='flex w-full gap-2 mt-3 items-center justify-center'>
-                <button disabled={isLoading} type='button' onClick={()=>signIn("github", {callbackUrl: '/app'})} className="w-full flex bg-white border-black border-4 rounded-xl items-center justify-center">
+                <button disabled={isLoading} type='button' onClick={()=>signIn("github", {callbackUrl: '/'})} className="w-full flex bg-white border-black border-4 rounded-xl items-center justify-center">
                     <img 
                         src="/svg/github.svg"
                         alt="github"
@@ -80,7 +83,7 @@ function Login() {
                     />
                     <p className="">github</p>
                 </button>
-                <button disabled={isLoading} type='button' onClick={()=>signIn("google", {callbackUrl: '/app'})} className="w-full flex rounded-xl border-black border-4 justify-center items-center">
+                <button disabled={isLoading} type='button' onClick={()=>signIn("google", {callbackUrl: '/'})} className="w-full flex rounded-xl border-black border-4 justify-center items-center">
                     <img 
                         src="/svg/google.svg"
                         alt="goggle"

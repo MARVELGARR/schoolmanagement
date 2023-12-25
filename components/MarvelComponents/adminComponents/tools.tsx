@@ -17,7 +17,7 @@ const Tools = ({className}: {className?:string}) => {
                navigations.map((nav, index) => {
                     return(
 
-                    <li onClick={()=> index === 1 && signOut()} key={index} className={cn('', index ==1? 'cursor-pointer':'' , 'flex items-center gap-[2rem]')}>
+                    <li onClick={()=> index === 1 && signOut()} key={index} className={cn('cursor-pointer', index ==1? '':'' , 'flex items-center  gap-[2rem]')}>
                         {nav.icon}
                         {nav.name}
                     </li>

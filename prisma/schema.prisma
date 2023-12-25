@@ -23,6 +23,15 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   account Account[]
+  student Student? @relation(fields: [studentId], references:[id])
+  studentId String? @db.ObjectId @unique
+  teacher Teacher? @relation(fields: [teacherId], references:[id])
+  teacherId String? @db.ObjectId @unique
+  parent Parents? @relation(fields: [parentId], references:[id])
+  parentId String? @db.ObjectId @unique
+
+  userId String? @db.ObjectId
+
 
 }
 
@@ -49,12 +58,17 @@ model Teacher{
   firstname   String
   lastname   String
   middlename  String
-  gender String
+  gender Gender
   email      String?   @unique
   phone String?
+  about String?
   image String?
+  user User?
+  religion Religion? 
   marital_status Maritalstatus
-  birthday String
+  birthday DateTime
+  socials Socials[]
+  yearJoined DateTime?
   courses   CourseEnrollment[]   // Array of subjects the teacher teaches
   address     String?
   createdAt DateTime  @default(now())
@@ -64,19 +78,25 @@ model Student{
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   firstname   String
   lastname   String
-  gender String
+  user User? 
+  userId String? @db.ObjectId @unique
+  gender Gender?
   courses   CourseEnrollment[]
   middlename  String
   email      String   @unique
   phone String?
   image String?
   level String?
+  about String?
+  yearJoined DateTime?
   parent Parents? @relation(fields: [parentId], references: [id])
   parentId String? @db.ObjectId
-  birthday String 
+  birthday DateTime? 
   address     String?
+  maritalStatus Maritalstatus?
+  socials Socials[]
   religion  Religion?
-  grade       Int        // Grade/Class of the student    // Address of the teacher
+  grade Grade[]        // Grade/Class of the student    // Address of the teacher
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -91,6 +111,10 @@ model Parents{
   image String? 
   birthday String  
   address     String?
+  marital_status Maritalstatus
+  user User?
+  socials Socials[] 
+  userId String? @db.ObjectId @unique
   student Student[]
   religion  Religion     // Grade/Class of the student    // Address of the teacher
   createdAt DateTime  @default(now())
@@ -102,7 +126,17 @@ model Course{
   name String
   unit Int
   studentId String @db.ObjectId
+  grade Grade?
   members CourseEnrollment[]
+}
+model Grade {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  grade     Result?
+  student   Student  @relation(fields: [studentId], references: [id])
+  studentId String @db.ObjectId
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  String @db.ObjectId @unique
+  // Add more grade-related attributes as needed
 }
 
 model CourseEnrollment {
@@ -132,12 +166,35 @@ enum UserRole {
   TEACHER
   STUDENT
   PARENTS
+  USER
 }
 
+enum Result {
+  A
+  B
+  C
+  D
+  E
+  F
+}
 
 enum Religion {
   christain
   muslim  
   judiasm
   // Add other roles as needed
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHERS
+}
+
+enum Socials {
+  FACEBOOK
+  INSTAGRAM
+  WEBSITE
+  TWITTER
+  THREAD
 }

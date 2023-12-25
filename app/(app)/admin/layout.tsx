@@ -17,7 +17,7 @@ const AdminLayout = ({children}: {children: React.ReactNode}) => {
 
 
     return (
-        <div className="flex items-center h-screen">
+        <div className="flex w-full items-center h-screen">
 
             <AdminSidebarLayout/>
             {children}

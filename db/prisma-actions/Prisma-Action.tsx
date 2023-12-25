@@ -1,51 +1,11 @@
-import { UserRole } from '@prisma/client';
+
 import { Religion } from "@prisma/client"
 import { Prisma } from "../prisma-setting/prisma-client"
 import { studentDataProps } from "@/interface";
-import { redirect } from 'next/navigation';
 
 
-export const CreateStudent = async ({ studentData }: { studentData: studentDataProps }) => {
-  try {
-    const {
-      firstname,
-      lastname,
-      gender,
-      middlename,
-      email,
-      phone,
-      image,
-      grade,
-      level,
-      birthday,
-      address,
-      religion,
-    } = studentData;
 
-    const student = await Prisma.student.create({
-      data: {
-        firstname,
-        lastname,
-        gender,
-        grade,
-        middlename,
-        email,
-        phone,
-        image,
-        level,
-        birthday,
-        address,
-        religion: Religion[religion as keyof typeof Religion], // Assuming Religion is an enum
-      },
-    });
 
-    console.log('Student created:', student);
-    return student;
-  } catch (error) {
-    console.error('Error creating student:', error);
-    throw error;
-  }
-};
 
 export const GetAdmin = async () =>{
   try{
@@ -81,6 +41,32 @@ export const GetCurrentUser = async (email : string) =>{
   }
 }
 
+export const GetAllStudent = async()=>{
+  try{
+    const getAllStudent = await Prisma.student.findMany()
+    if(!getAllStudent){
+      throw new Error('Could not find student')
+    }
+    return getAllStudent
+  }
+  catch(error){
+    throw new Error('Could not find student')
+  }
+}
 // utils/auth.ts
+
+export const GetAllUsers = async()=>{
+
+  try{
+    const getAllUsers = await Prisma.user.findMany()
+    if(!getAllUsers){
+      throw new Error('Could not find user')
+    }
+    return getAllUsers
+  }
+  catch(error){
+    throw new Error('Could not find user')
+  }
+}
 
 

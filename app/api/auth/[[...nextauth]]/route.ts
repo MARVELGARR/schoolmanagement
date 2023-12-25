@@ -7,8 +7,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
 import { NextAuthOptions } from 'next-auth';
-import { routeBasedOnUserRole } from "@/db/prisma-actions/Prisma-Action";
 import { redirect } from "next/navigation";
+import { UserRole } from "@prisma/client";
 
 
 
@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET as string,
       profile(profile) {
         return { id: profile.id, name: profile.name, email: profile.email, image: profile.avatar_url,
-          role: profile.role = "STUDENT" 
+          role: profile.role = UserRole.USER
         }
       },
     }),
@@ -35,7 +35,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET as string,
       profile(profile) {
         return { id: profile.sub, name: profile.name, email: profile.email, image: profile.picture,
-          role: profile.role = 'STUDENT' 
+          role: profile.role = 'USER' 
         }
       },
       
@@ -110,38 +110,13 @@ export const authOptions: NextAuthOptions = {
 
           email: token?.email,
           image: token?.image as string,
+          
           // Add other user properties as needed
         };
         
         
       }
       return session;
-    },
-    async signIn({ user, account, profile, email, credentials }) {
-      // Fetch the user's role from the database
-      const prismaUser = await Prisma.user.findUnique({
-        where: {
-          email: user?.email as string,
-        },
-      });
-
-      if(prismaUser?.role === 'ADMIN'){
-        redirect('/app/admin');
-      }
-      else if(prismaUser?.role === 'STUDENT'){
-        redirect('/app/student')
-      }
-      else if(prismaUser?.role === 'PARENTS'){
-        redirect('/app/parent')
-      }
-      else if(prismaUser?.role === 'TEACHER'){
-        redirect('/app/teacher')
-      }
-      else{
-        redirect('/');
-      }
-      
-      return true;
     },
   },
   

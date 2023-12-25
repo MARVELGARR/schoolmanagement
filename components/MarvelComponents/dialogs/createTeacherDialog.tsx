@@ -7,9 +7,9 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { IoMdAdd } from "react-icons/io";
-import StudentForm from "../studentComponents/studentCreationForm";
+import TeacherForm from "../teacherComponent/teacherCreationForm";
 
-const CreateStudentForm = ({user}:{user: string}) => {
+const CreateTeacherForm = ({user}: {user: string}) => {
     return ( 
         <Dialog >
             <DialogTrigger>
@@ -19,11 +19,11 @@ const CreateStudentForm = ({user}:{user: string}) => {
                 </div>
             </DialogTrigger>
             <DialogContent className="rounded-xl">
-                <StudentForm/>
+                <TeacherForm/>
             </DialogContent>
         </Dialog>
 
     );
 }
  
-export default CreateStudentForm;
+export default CreateTeacherForm;

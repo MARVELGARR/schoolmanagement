@@ -1,3 +1,4 @@
+import UserCount from "@/components/MarvelComponents/adminComponents/adminDashboard/LeftDashBoard/userCounts/useCount";
 import Header from "@/components/MarvelComponents/headerComponents/header";
 
 const AdminDashboard = () => {
@@ -7,6 +8,12 @@ const AdminDashboard = () => {
             <section className='w-full'>
                 <Header className='h-[5rem]' name='Dashboard'/>
             </section>
+            <div className="AdminHero flex item-center">
+                <section className="">
+                    <UserCount className='px-[1rem]'/>
+                </section>
+                <section className=""></section>
+            </div>
         </div>
     );
 }

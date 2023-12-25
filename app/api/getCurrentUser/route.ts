@@ -7,11 +7,14 @@ export async function GET(): Promise<unknown> {
   
   try {
     const session = await getServerSession(authOptions);
+
     if (!session) {
       return NextResponse.json({ message: "No session" });
-    } else if (!session?.user?.email) {
+    }
+    if (!session?.user?.email) {
       return NextResponse.json({ message: "No user email" });
-    } else {
+    } 
+    if (session) {
       const getCurrentUser = await Prisma.user.findUnique({
         where: {
           email: session?.user?.email,

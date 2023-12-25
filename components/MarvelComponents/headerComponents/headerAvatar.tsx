@@ -19,7 +19,7 @@ import {
 } from "lucide-react"  
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { signIn, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 
 const HeaderAvatar = ({className}: {className?: string}) => {
@@ -61,7 +61,7 @@ const HeaderAvatar = ({className}: {className?: string}) => {
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator className='bg-gray-200' />
-                        <DropdownMenuItem className='cursor-pointer' onClick={()=>signIn()}>
+                        <DropdownMenuItem className='cursor-pointer' onClick={()=>signOut({ callbackUrl: '/login' })}>
                             <LogOut className="mr-2 h-4 w-4" />
                             <span>Log out</span>
                         </DropdownMenuItem>
