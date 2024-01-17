@@ -1,25 +1,45 @@
-import { userProps } from '@/interface';
+import { recievedUserProps, userProps } from '@/interface';
+import { UserRole } from '@prisma/client';
+import { string } from 'zod';
 import { create } from 'zustand';
 
-interface useUserProps {
-  users: userProps[];
+
+
+export interface useUserProps {
+  users: {
+    students: userProps[];
+    teachers: userProps[],
+    parents: userProps[],
+    users: recievedUserProps[]
+  };
   getAllUsers: () => void;
 }
 
 export const useUser = create<useUserProps>((set) => ({
-  users: [],
+  users: {
+    students: [],
+    teachers: [],
+    parents: [],
+    users: []
+  },
   getAllUsers: async () => {
     try {
-      // Ensure the URL is prefixed with the protocol (e.g., http:// or https://)
       const response = await fetch('/api/getAllUsers');
-      const data = await response.json();
-      
-      // Log the data for debugging purposes
-
-      
-      // Update the state with the fetched data
-      set({users: data});
-      
+      const data: recievedUserProps = await response.json();
+  
+      const arryStudent = data.getAllUsers.filter((student) => student.role === UserRole.STUDENT);
+      const arryTeacher = data.getAllUsers.filter((teacher) => teacher.role === UserRole.TEACHER);
+      const arryParent = data.getAllUsers.filter((parent) => parent.role === UserRole.PARENTS);
+      console.log(arryStudent)
+      set({
+        users: {
+          students: arryStudent,
+          teachers: arryTeacher,
+          parents: arryParent,
+          users: Array(data),
+        },
+      });
+  
     } catch (error) {
       console.error('Error fetching users:', error);
     }

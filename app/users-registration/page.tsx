@@ -6,7 +6,7 @@ import CreateTeacherForm from "@/components/MarvelComponents/dialogs/createTeach
 const UserRegistration = () => {
     return (
         <div className='w-full h-screen flex justify-center gap-[5rem] item-center'>
-
+            <title>user registration</title>
             <CreateStudentForm user='Student' />
             <CreateTeacherForm user='Teacher'/>
             <CreateParentForm user='Parent'/>

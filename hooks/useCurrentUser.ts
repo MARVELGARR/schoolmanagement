@@ -2,7 +2,7 @@
 'use client'
 import { UserRole } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
@@ -16,7 +16,7 @@ type currentUserProps = {
 
 const usCurrentUser = () => {
 
-
+  const router = useRouter()
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
@@ -25,12 +25,11 @@ const usCurrentUser = () => {
   });
   const [currentRole, setCurrentRole] = useState<string | null>(null); // Adjusted the type here
   const currentEmail = session?.user?.email;
-  const [isLoading, setIsLoading] =useState<boolean>(false)
+  
 
   useEffect(() => {
     const abortController = new AbortController();
     const fetchUser = async () => {
-      setIsLoading(true)
       try {
         const userData = await fetch('api/getCurrentUser',{
 
@@ -43,21 +42,19 @@ const usCurrentUser = () => {
       } catch (error) {
         console.error('Failed to fetch currentUser:', error);
       }
-      finally{
-        setIsLoading(false);
-      }
+
     };
 
     // Only fetch user if there is a session
-    if (session) {
+    if (status === 'authenticated') {
       fetchUser();
     }
     return ()=>{
       abortController.abort();
     }
-  }, []);
+  }, [session]);
 
-  return { currentEmail, currentRole, isLoading };
+  return { currentEmail, currentRole, isLoading: status === 'loading' };
 };
 
 export default usCurrentUser;

@@ -1,13 +1,13 @@
 'use client'
 import { UserRole } from "@prisma/client";
 
-import { redirect } from "next/navigation";
-
+import { redirect, useRouter } from "next/navigation";
 
 const useRoute = (role: UserRole) => {
+    const router = useRouter()
 
   const redirectTo = (path: string) => {
-    redirect(path);
+    router.push(path);
   };
     
     switch (role) {

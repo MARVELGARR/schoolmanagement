@@ -13,7 +13,7 @@ const AdminSidebarLayout = () => {
     const { data: session} = useSession({
         required: true,
         onUnauthenticated() {
-            redirect('/login?callback=/app')
+            redirect('/login?callback=/')
         },
     })
 

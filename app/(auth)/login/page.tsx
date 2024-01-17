@@ -29,7 +29,7 @@ function Login() {
                 }
                 if(callback?.ok && !callback?.error){
                     toast.success("Logged in")
-                    router.push("/app")
+                    router.push("/")
                     
                 }
             })

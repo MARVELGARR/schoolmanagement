@@ -4,6 +4,7 @@ import useCurrentUser from "@/hooks/useCurrentUser"
 import { UserRole } from "@prisma/client"
 import { useSession } from "next-auth/react"
 import {  useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function Home() {
   const router = useRouter()
@@ -15,9 +16,11 @@ export default function Home() {
   })
 
   const {isLoading, currentRole} = useCurrentUser()
+
   if(currentRole !== null ){
     useRoute(currentRole as UserRole)
   }
+
 
   return (
     <div className="h-screen w-full flex items-center justify-center">
